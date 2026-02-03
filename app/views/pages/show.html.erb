@@ -1,0 +1,20 @@
+<div class="valentine-container"
+     data-controller="runaway-button hearts">
+
+  <div class="card">
+    <h1>Karishka,<br>will u be my baby girl? 💕</h1>
+
+    <div class="buttons">
+      <%= button_to "Yes 💖",
+            answer_path(answer: "yes"),
+            method: :post,
+            class: "yes-btn" %>
+
+      <button class="no-btn"
+              data-runaway-button-target="button">
+        No 😈
+      </button>
+    </div>
+  </div>
+
+</div>
