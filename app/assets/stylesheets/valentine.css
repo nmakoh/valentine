@@ -3,7 +3,13 @@ body {
   /* allow the page to grow on small devices (avoid hiding content) */
   min-height: 100vh;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  font-family: "Comic Sans MS", cursive;
+  /* more readable, modern system font stack */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
@@ -36,6 +42,24 @@ h1 {
   font-size: 3rem;
   margin-bottom: 50px;
   line-height: 1.1;
+}
+
+/* improve heading contrast and weight for readability */
+h1,
+.yes-container h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+/* general paragraph/readable text */
+p,
+.card p,
+.yes-container p {
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.18);
 }
 
 .yes-btn {
@@ -112,6 +136,16 @@ h1 {
 
 .yes-btn {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ensure buttons inherit readable typography */
+button,
+.yes-btn,
+.no-btn,
+.start-button {
+  font-family: inherit;
+  font-weight: 600;
+  text-rendering: optimizeLegibility;
 }
 
 .yes-btn:hover {
@@ -199,10 +233,22 @@ h1 {
   }
 
   .hug-gif,
+  .dance-gif,
   .cute.hug-gif,
   .cute.dance-gif {
     width: 100%;
     max-width: 320px;
+  }
+
+  /* yes-container specific text sizing */
+  .yes-container h1 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .yes-container p {
+    font-size: 1rem;
+    margin-bottom: 12px;
   }
 }
 
