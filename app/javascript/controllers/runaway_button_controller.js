@@ -73,6 +73,10 @@ export default class extends Controller {
     try { this.buttonTarget.removeEventListener("touchstart", this._touchHandler) } catch (e) {}
     try { this.buttonTarget.removeEventListener("click", this._clickHandler, true) } catch (e) {}
     try { window.removeEventListener("pointermove", this._pointerMoveHandler) } catch (e) {}
+    // remove any placeholder left in the DOM
+    try {
+      if (this._placeholder && this._placeholder.parentNode) this._placeholder.parentNode.removeChild(this._placeholder)
+    } catch (e) {}
   }
 
   runAway() {
@@ -121,6 +125,24 @@ export default class extends Controller {
     // compute current position relative to container
     const startLeft = rect.left - containerRect.left
     const startTop = rect.top - containerRect.top
+
+    // insert a placeholder in the flow so other elements (like the Yes button)
+    // don't shift into the No button's spot when it becomes absolute
+    if (!this._placeholder) {
+      try {
+        const computedBtnStyle = window.getComputedStyle(btn)
+        this._placeholder = document.createElement('div')
+        this._placeholder.className = 'no-placeholder'
+        this._placeholder.style.width = `${rect.width}px`
+        this._placeholder.style.height = `${rect.height}px`
+        this._placeholder.style.display = computedBtnStyle.display === 'inline' ? 'inline-block' : computedBtnStyle.display
+        this._placeholder.style.margin = computedBtnStyle.margin
+        this._placeholder.style.verticalAlign = computedBtnStyle.verticalAlign || 'middle'
+        btn.parentNode.insertBefore(this._placeholder, btn)
+      } catch (e) {
+        // ignore placeholder failures
+      }
+    }
 
     // switch to absolute positioning inside the container
     btn.style.position = 'absolute'
