@@ -8,9 +8,30 @@ export default class extends Controller {
     this.currentX = 0
     this.currentY = 0
 
+    // desktop hover
     this.buttonTarget.addEventListener("mouseenter", () => {
       this.runAway()
     })
+
+    // support pointer events (covers pen, touch-capable pointer devices)
+    this.buttonTarget.addEventListener("pointerenter", () => {
+      this.runAway()
+    })
+
+    // mobile: when user touches/taps the button, make it run away before the click
+    // use non-passive so we can prevent the default click where appropriate
+    const touchHandler = (e) => {
+      // prevent the immediate click so the button can move away
+      if (e.cancelable) e.preventDefault()
+      this.runAway()
+    }
+
+    try {
+      this.buttonTarget.addEventListener("touchstart", touchHandler, { passive: false })
+    } catch (err) {
+      // fallback for older browsers that don't support options object
+      this.buttonTarget.addEventListener("touchstart", touchHandler)
+    }
   }
 
   runAway() {
